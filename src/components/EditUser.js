@@ -20,7 +20,7 @@ const EditUser = () => {
     }
     useEffect(() => {
         const currentId = param.id
-        const slectedUser = userList.find(user => user.id === currentId)
+        const slectedUser = userList.find(user => user.id == currentId)
         setSelectedUser(slectedUser)
     }, [param.id, userList])
     return (

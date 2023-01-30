@@ -1,4 +1,5 @@
-import React,{createContext,useState} from 'react'
+import axios from 'axios';
+import React,{createContext,useState,useEffect} from 'react'
 import { v4 as uuidv4 } from 'uuid';
 export const UsersContext = createContext();
 
@@ -6,10 +7,18 @@ export const UsersContext = createContext();
 
 const UserContextProvider = (props) => {
     const [userList, setUserList] = useState([
-        {id:uuidv4(), name:"smith"},
-        {id:uuidv4(), name:"smith"},
-        {id:uuidv4(), name:"smith"},
+        // {id:uuidv4(), name:"smith"},
+        // {id:uuidv4(), name:"smith"},
+        // {id:uuidv4(), name:"smith"},
     ])
+
+
+    useEffect(()=>{
+        axios.get("https://jsonplaceholder.typicode.com/users   ").then(res=>{
+            console.log(res)
+            setUserList(res.data)
+        })
+    },[])
 
     const addUser = (name) =>{
         setUserList([...userList,{id:uuidv4(),name}])
@@ -22,7 +31,7 @@ const UserContextProvider = (props) => {
     const editUser = (name , id) =>{
         const newArray = userList.map((user) => user.id === id ? {...user , name:name} : user)
         setUserList(newArray)
-        // console.log(userList)
+        // console.log(newArray)
     }
 
   return (
